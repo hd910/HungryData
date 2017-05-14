@@ -28,6 +28,11 @@ function chooseImage(self, arg) {
 function search(newSearch) {
     if (newSearch) {
         document.getElementById('thumbnail-container').innerHTML = '';
+        selectedCount = 0;
+        selectedList = '';
+        totalPages = 1;
+        $("#footer").fadeIn().css("display", "none");
+        
     }
     var foodType = document.getElementById("search-input").value;
     if (totalPages == 1) {
@@ -74,6 +79,11 @@ function xmlParser(response) {
 
 function getLink() {
     alert(selectedList);
+    var message = selectedList;
+    var subject = "Hungry Data Builder";
+    document.location.href = "mailto:hd910@outlook.com?subject="
+        + encodeURIComponent(subject)
+        + "&body=" + encodeURIComponent(message);
 }
 
 function loadMore() {
