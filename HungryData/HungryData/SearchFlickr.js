@@ -78,7 +78,6 @@ function xmlParser(response) {
 }
 
 function getLink() {
-    alert(selectedList);
     var message = selectedList;
     var subject = "Hungry Data Builder";
     document.location.href = "mailto:hd910@outlook.com?subject="
