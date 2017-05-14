@@ -1,6 +1,7 @@
 ﻿var selectedCount = 0;
 var selectedList = '';
-var numberToSelect = 3;
+var numberToSelect = 6;
+var totalPages = 1;
 
 function chooseImage(self, arg) {
     if (selectedCount == 0) {
@@ -24,14 +25,19 @@ function chooseImage(self, arg) {
     }
 }
 
-function search() {
+function search(newSearch) {
+    if (newSearch) {
+        document.getElementById('thumbnail-container').innerHTML = '';
+    }
     var foodType = document.getElementById("search-input").value;
-
-    selectedList = foodType;
-    selectedList += '\n' + numberToSelect
-
+    if (totalPages == 1) {
+        selectedList = foodType;
+        selectedList += '\n' + numberToSelect;
+        $("#loadMoreButton").fadeIn().css("display", "block");
+    }
+   
     var k = "c5ccdca2dd5d93edf65f108cea17557b";
-    var url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + k + "&text=" + foodType + "&safe_search=1&per_page=12&sort=relevance";
+    var url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + k + "&text=" + foodType + "&safe_search=1&per_page=12&page="+totalPages+"&sort=relevance";
     if (foodType != null && foodType != '') {
         $.ajax({
             method: "GET",
@@ -45,7 +51,11 @@ function search() {
 }
 
 function xmlParser(response) {
-    var thumbnailHTML = "<h2>Choose " + numberToSelect+" Images!</h2><br />";
+    var thumbnailHTML = '';
+    if (totalPages == 1) {
+        thumbnailHTML = "<h2>Choose " + numberToSelect + " Images!</h2><br />";
+    }
+    
     $(response).find("photo").each(function () {
         var id = $(this).attr("id");
         var secret = $(this).attr("secret");
@@ -59,10 +69,14 @@ function xmlParser(response) {
             "<img src='" + imageURL + "' style='width:350px;height:250px'/><div class='caption'><button type='button' style='width:100%'" +
             " class='btn btn-success' onclick='chooseImage(this,{full:`" + imageURL + "`,thumb:`" + thumbURL+"`})' > Add to List</button ></div></div ></div >";
     });
-    document.getElementById('thumbnail-container').innerHTML = thumbnailHTML;
+    document.getElementById('thumbnail-container').innerHTML += thumbnailHTML;
 }
 
 function getLink() {
     alert(selectedList);
 }
 
+function loadMore() {
+    totalPages++;
+    search(false);
+}

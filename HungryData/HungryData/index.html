@@ -23,9 +23,10 @@
     <div class="container">
         <div class="input-group input-group-lg col-md-8 col-md-offset-2">
             <span class="input-group-addon" id="sizing-addon1">I want...</span>
-            <input type="text" class="form-control" placeholder="Burger? Pizza? Sushi?" id="search-input" aria-describedby="sizing-addon1">
+            <input type="text" class="form-control" placeholder="Burger? Pizza? Sushi?" id="search-input" aria-describedby="sizing-addon1"
+                   onkeydown = "if (event.keyCode == 13) document.getElementById('searchButton').click()" >
             <span class="input-group-btn">
-                <button class="btn btn-default" type="button" onclick="search()">Search</button>
+                <button class="btn btn-default"  id="searchButton" type="button" onclick="search(true)">Search</button>
             </span>
         </div>
         <br />
@@ -40,9 +41,13 @@
                 </div>
             </div>-->
         </div>
+        <button type="button" id="loadMoreButton" style="width:100%; display:none" class="btn btn-default" onclick="loadMore()">Load More</button>
      </div>
-    <br /><br /><br />
-    <div class="container" id="footer" style="position:fixed;bottom:0;left:0;right:0; background-color:white; padding-top:20px; padding-bottom:0px; display:none">
+
+    
+
+    <br /><br /><br /><br />
+    <div class="container" id="footer" style="position:fixed;bottom:0;left:0;right:0; background-color:#f7f7f9;border:1px solid #e1e1e8; padding-top:20px; padding-bottom:0px; display:none">
         <div class="row">
             <div class="col-xs-10" >
                 <div class="progress" style="height:30px;">
